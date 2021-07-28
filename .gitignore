@@ -1,5 +1,5 @@
 # Bot data folder
-/data/
+/data/users/*
 
 # Node.JS modules
 /node_modules/

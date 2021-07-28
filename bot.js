@@ -57,21 +57,21 @@ client.on('message', message => {
     }
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
     if(text.match(commands.work)){
-        fs.accessSync(`./data/users/${userId}.json`).then((err) => {
-            if(err){
-                // initialize userdata
-                userdata = {money: 20};
-                fs.writeFileSync(`./data/users/${userId}.json`, JSON.stringify(userdata));
-            } else userdata = fs.readFileSync(`./data/users/${userId}.json`);
-        });
+        try {
+            fs.accessSync(`/data/users/${userId}.json`);
+            userdata = JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
+        } catch (error){
+            userdata = {money: 20};
+            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        }
         var moneyget = getRandomInt(0,5);
         userdata.money += moneyget;
         message.channel.send(`Ты пошёл на работу и заработал ${moneyget} монет`);
-        fs.writeFileSync( `./data/users/${userId}.json` , JSON.stringify(money));
+        fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
     }
     if(text.match(commands.create_data)){
         userdata = {money: 20};
-        fs.writeFileSync( `./data/users/${userId}.json` , JSON.stringify(userdata) );
+        fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
     }
     if(text.match(commands.help)){
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Help:");
@@ -80,21 +80,21 @@ client.on('message', message => {
         embed.addField("inv | inventory", "Ваш баланс.", true);
         embed.addField("p | profile", "Ваш профиль.", );
         embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
-        channel.send(embed);
+        message.channel.send(embed);
     }
     if(text.match(commands.inventory)){
-        fs.accessSync(`./data/users/${userId}.json`).then((err) => {
-            if(err){
-                // initialize userdata
-                userdata = {money: 20};
-                fs.writeFileSync(`./data/users/${userId}.json`, JSON.stringify(userdata));
-            } else userdata = fs.readFileSync(`./data/users/${userId}.json`);
-        });
+        try {
+            fs.accessSync(`/data/users/${userId}.json`);
+            userdata = JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
+        } catch (error){
+            userdata = {money: 20};
+            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        }   
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
-        embed.addField("**Inventory**:");
-        embed.addField(`Coins: ${userdata.money}<:voidcoins:858724718303510550>`)
+        // embed.addField("**Inventory**:");
+        embed.addField(`Coins:`, `${userdata.money}<:voidcoin:866191410133991445>`, true);
         embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
-        channel.send(embed);
+        message.channel.send(embed);
     }
 });
 
