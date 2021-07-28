@@ -1,0 +1,8 @@
+# GitHub folder
+/.github/
+
+# Bot data folder
+/data/
+
+# Node.JS modules
+/node-modules/
