@@ -16,7 +16,7 @@ const commands = {
     help: /^%(h|help)/i
 };
 
-const emojis = {
+const e = {
     up = '<a:voteup:864886664064925716>',
     down = '<a:votedown:864886641712693278>',
     vc = '<:voidcoin:866191410133991445>'
@@ -40,8 +40,8 @@ client.on('message', message => {
     let userdata;
 
     if(text.match(commands.vote)){
-        message.react(emojis.up);
-        message.react(emojis.down);
+        message.react(e.up);
+        message.react(e.down);
     }
     if(text.match(commands.myid)){
         message.channel.send("ID " + message.author.tag + ": " + message.author.id);
@@ -98,7 +98,7 @@ client.on('message', message => {
         }   
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
         // embed.addField("**Inventory**:");
-        embed.addField(`Coins:`, `${userdata.money + emojis.vc}`, true);
+        embed.addField(`Coins:`, `${userdata.money + e.vc}`, true);
         embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
