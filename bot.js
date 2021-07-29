@@ -16,6 +16,11 @@ const commands = {
     help: /^%(h|help)/i
 };
 
+const emojis = {
+    up = '<a:voteup:864886664064925716>',
+    down = '<a:votedown:864886641712693278>'
+};
+
 var num = 0;
 var fishget = 0;
 var fish = 0;
@@ -34,8 +39,8 @@ client.on('message', message => {
     let userdata;
 
     if(text.match(commands.vote)){
-        message.react('<a:voteup:864886664064925716>');
-        message.react('<a:votedown:864886641712693278>');
+        message.react(emojis.up);
+        message.react(emojis.down);
     }
     if(text.match(commands.myid)){
         message.channel.send("ID " + message.author.tag + ": " + message.author.id);
