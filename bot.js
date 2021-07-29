@@ -85,7 +85,7 @@ client.on('message', message => {
         embed.addField("help", "Выводит это сообщение.", true);
         embed.addField("inv | inventory", "Ваш баланс.", true);
         embed.addField("p | profile", "Ваш профиль.", );
-        embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
+        embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
     if(text.match(commands.inventory)){
@@ -99,7 +99,7 @@ client.on('message', message => {
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
         // embed.addField("**Inventory**:");
         embed.addField(`Coins:`, `${userdata.money + e.vc}`, true);
-        embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
+        embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
 });
