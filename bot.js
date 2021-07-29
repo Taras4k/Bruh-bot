@@ -11,7 +11,7 @@ const commands = {
     // RPG
     inventory: /^s!(i|inv|inventory)/i,
     work: /^s!(w|work)/i,
-    fish: /^s!(f|fish)/i,
+    fish: /^s!(f|fish|fishing)/i,
     create_data: /^s!(create-data)/i,
     help: /^%(h|help)/i
 };
@@ -37,8 +37,6 @@ client.on('message', message => {
     const text = message.content;
     const userId = message.author.id;
 
-    let userdata;
-
     if(text.match(commands.vote)){
         message.react(e.up);
         message.react(e.down);
@@ -62,14 +60,8 @@ client.on('message', message => {
         }
     }
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
+    if(text.match(commands.work) || text.match(commands.inventory) || commands.create_data) let userdata = getUserdata(userId);
     if(text.match(commands.work)){
-        try {
-            fs.accessSync(`/data/users/${userId}.json`);
-            userdata = JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
-        } catch (error){
-            userdata = {money: 20};
-            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
-        }
         var moneyget = getRandomInt(0,5);
         userdata.money += moneyget;
         message.channel.send(`Ты пошёл на работу и заработал ${moneyget} монет`);
@@ -89,24 +81,25 @@ client.on('message', message => {
         message.channel.send(embed);
     }
     if(text.match(commands.inventory)){
-        try {
-            fs.accessSync(`/data/users/${userId}.json`);
-            userdata = JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
-        } catch (error){
-            userdata = {money: 20};
-            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
-        }   
+        
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
         // embed.addField("**Inventory**:");
         embed.addField(`Coins:`, `${userdata.money + e.vc}`, true);
         embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
+    fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
 });
 
+function getUserdata(userId){
+    try {
+        fs.accessSync(`/data/users/${userId}.json`);
+        return JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
+    } catch (error){
+        userdata = {money:20};
+        fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        return {money: 20};
+    }
+}
+
 client.login('ODMzNzUyNzkwODU2ODkyNDI2.YH26yw.kztoOdiTwMZ3_d7qPKTV-_ResKE'); // з д е с ь    б ы л        К у с ь //
-
-/* Videos
-https://stackoverflow.com/questions/66106762/discord-js-how-to-mention-message-author - Mеssages
-
-*/
