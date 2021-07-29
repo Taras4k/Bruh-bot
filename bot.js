@@ -80,8 +80,8 @@ client.on('message', message => {
         fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
     }
     if(text.match(commands.help)){
-        var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Help:");
-        embed.addField("**Commands**:");
+        var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:");
+        // embed.addField("**Commands**:");
         embed.addField("help", "Выводит это сообщение.", true);
         embed.addField("inv | inventory", "Ваш баланс.", true);
         embed.addField("p | profile", "Ваш профиль.", );
