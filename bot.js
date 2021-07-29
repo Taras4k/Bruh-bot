@@ -18,7 +18,8 @@ const commands = {
 
 const emojis = {
     up = '<a:voteup:864886664064925716>',
-    down = '<a:votedown:864886641712693278>'
+    down = '<a:votedown:864886641712693278>',
+    vc = '<:voidcoin:866191410133991445>'
 };
 
 var num = 0;
@@ -97,7 +98,7 @@ client.on('message', message => {
         }   
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
         // embed.addField("**Inventory**:");
-        embed.addField(`Coins:`, `${userdata.money}<:voidcoin:866191410133991445>`, true);
+        embed.addField(`Coins:`, `${userdata.money + emojis.vc}`, true);
         embed.setTimestamp().setFooter('By Taras4k.', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
