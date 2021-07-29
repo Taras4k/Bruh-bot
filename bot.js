@@ -60,7 +60,8 @@ client.on('message', message => {
         }
     }
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
-    if(text.match(commands.work) || text.match(commands.inventory) || commands.create_data) let userdata = getUserdata(userId);
+    let userdata;
+    if(text.match(commands.work) || text.match(commands.inventory) || commands.create_data) userdata = getUserdata(userId);
     if(text.match(commands.work)){
         var moneyget = getRandomInt(0,5);
         userdata.money += moneyget;
