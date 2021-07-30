@@ -13,7 +13,8 @@ const commands = {
     work: /^s!(w|work)/i,
     fish: /^s!(f|fish|fishing)/i,
     create_data: /^s!(create-data)/i,
-    help: /^%(h|help)/i
+    help: /^%(h|help)/i,
+    casino: /^s!(c|casino) (\d{1,3})$/i,
 };
 
 const e = {
@@ -60,18 +61,6 @@ client.on('message', message => {
         }
     }
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
-    let userdata;
-    if(text.match(commands.work) || text.match(commands.inventory) || commands.create_data) userdata = getUserdata(userId);
-    if(text.match(commands.work)){
-        var moneyget = getRandomInt(0,5);
-        userdata.money += moneyget;
-        message.channel.send(`Ты пошёл на работу и заработал ${moneyget} монет`);
-        fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
-    }
-    if(text.match(commands.create_data)){
-        userdata = {money: 20};
-        fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
-    }
     if(text.match(commands.help)){
         var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:");
         // embed.addField("**Commands**:");
@@ -81,24 +70,47 @@ client.on('message', message => {
         embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
-    if(text.match(commands.inventory)){
-        
-        var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
-        // embed.addField("**Inventory**:");
-        embed.addField(`Coins:`, `${userdata.money + e.vc}`, true);
-        embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
-        message.channel.send(embed);
+    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.create_data) || text.match(commands.casino)){
+        let userdata = getUserdata(userId);
+        if(text.match(commands.work)){
+            var moneyget = getRandomInt(0,5);
+            userdata.money += moneyget;
+            message.channel.send(`Ты пошёл на работу и заработал ${moneyget} монет`);
+            fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
+        }
+        if(text.match(commands.casino)){
+            const amount = text.match(commands.casino)[2];
+            if(userdata.money >= amount){
+                userdata.money -= amount;
+                if(getRandomInt(1,2) == 1){
+                    message.channel.send(`Повезло! Вы выиграли ${Math.round(amount * 1.5)} монет, потратив ${amount}`);
+                    userdata.money += Math.round(amount * 1.5);
+                    console.log(userdata);
+                } else message.channel.send(`Не повезло... Вы потратили ${amount} монет, ничего не получив.`);
+            } else message.channel.send("Недостаточно монет!");
+        }
+        if(text.match(commands.create_data)){
+            userdata = {money: 20};
+            fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
+        }
+        if(text.match(commands.inventory)){
+            var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
+            // embed.addField("**Inventory**:");
+            embed.addField(`Coins:`, `${userdata.money}${e.vc}`, true);
+            embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
+            message.channel.send(embed);
+        }
+        fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
     }
-    fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
 });
 
 function getUserdata(userId){
     try {
-        fs.accessSync(`/data/users/${userId}.json`);
-        return JSON.parse(fs.readFileSync(`/data/users/${userId}.json`));
+        fs.accessSync(`${__dirname}\\data\\users\\${userId}.json`);
+        return JSON.parse(fs.readFileSync(`${__dirname}\\data\\users\\${userId}.json`));
     } catch (error){
         userdata = {money:20};
-        fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        fs.writeFileSync(__dirname + `\\data\\users\\${userId}.json`, JSON.stringify(userdata));
         return {money: 20};
     }
 }
