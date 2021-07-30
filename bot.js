@@ -12,7 +12,6 @@ const commands = {
     inventory: /^s!(i|inv|inventory)/i,
     work: /^s!(w|work)/i,
     fish: /^s!(f|fish|fishing)/i,
-    create_data: /^s!(create-data)/i,
     help: /^%(h|help)/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
 };
@@ -70,7 +69,7 @@ client.on('message', message => {
         embed.setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg');
         message.channel.send(embed);
     }
-    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.create_data) || text.match(commands.casino)){
+    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino)){
         let userdata = getUserdata(userId);
         if(text.match(commands.work)){
             var moneyget = getRandomInt(0,5);
@@ -88,10 +87,6 @@ client.on('message', message => {
                     console.log(userdata);
                 } else message.channel.send(`Не повезло... Вы потратили ${amount} монет, ничего не получив.`);
             } else message.channel.send("Недостаточно монет!");
-        }
-        if(text.match(commands.create_data)){
-            userdata = {money: 20};
-            fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
         }
         if(text.match(commands.inventory)){
             var embed = new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:");
