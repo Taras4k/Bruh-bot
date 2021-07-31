@@ -8,7 +8,6 @@ const commands = {
     ping: /^%(p|ping)/i,
     myid: /^%(myid|id|mi)/i,
     yes_or_no: /^%(yrn|yes-or-no)/i,
-    tomoko: /^%(pingtomoko)/i,
     // RPG
     inventory: /^s!(i|inv|inventory)/i,
     work: /^s!(w|work)/i,
@@ -47,11 +46,6 @@ client.on('message', message => {
         });
     }
     if(text.match(commands.yes_or_no)) if(getRandomInt(1,2) == 1) message.channel.send("Я думаю нет!"); else message.channel.send("Я думаю да!");
-    if(text.match(commands.tomoko)){
-        for (let i = 0; i < 25; i++) {
-            message.channel.send('<@602076422474956800>');
-        }
-    }
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
     if(text.match(commands.help)) message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:")
         .addField("help", "Выводит это сообщение.", true)
