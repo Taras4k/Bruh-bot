@@ -13,7 +13,7 @@ const commands = {
     inventory: /^s!(i|inv|inventory)/i,
     work: /^s!(w|work)/i,
     fish: /^s!(f|fish|fishing)/i,
-    help: /^%(h|help)/i,
+    help: /^(s!|%)(h|help)/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
     transfer: /^s!(t|pay) (\d{1,3})$/i,
 };
