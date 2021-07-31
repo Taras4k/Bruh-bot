@@ -15,6 +15,7 @@ const commands = {
     fish: /^s!(f|fish|fishing)/i,
     help: /^%(h|help)/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
+    transfer: /^s!(t|pay) (\d{1,3})$/i,
 };
 
 const e = {
@@ -56,7 +57,7 @@ client.on('message', message => {
         .addField("help", "Выводит это сообщение.", true)
         .addField("inv | inventory", "Ваш баланс.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
-    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino)){
+    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer)){
         let userdata = getUserdata(userId);
         if(text.match(commands.work)){
             var moneyget = getRandomInt(0,5);
@@ -74,6 +75,23 @@ client.on('message', message => {
                     console.log(userdata);
                 } else message.channel.send(`Не повезло... Вы потратили ${amount} монет, ничего не получив.`);
             } else message.channel.send("Недостаточно монет!");
+        }
+        if (text.match(commands.transfer)){
+            if (message.reference != null){
+                message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
+                    const amount = Number(text.match(commands.transfer)[2]);
+                    if(amount > 0){
+                        if(userdata.money >= amount){
+                            let receivedata = getUserdata(messageRef.author.id);
+                            receivedata.money = Number(receivedata.money) + amount;
+                            userdata.money = Number(userdata.money) - amount;
+                            fs.writeFileSync(__dirname + `/data/users/${messageRef.author.id}.json`, JSON.stringify(receivedata));
+                            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+                            message.channel.send(`Ты перевёл ${amount + e.vc} игроку ${messageRef.author.tag}`);
+                        } else message.channel.send("Недостаточно монет!");
+                    } else message.channel.send("Это так не работает");
+                }).catch(console.error);
+            } else message.channel.send("Сообщение должно быть отправлено в ответ на сообщение!");
         }
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
