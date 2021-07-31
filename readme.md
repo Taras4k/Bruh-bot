@@ -9,3 +9,6 @@ create "users" folder in "data" folder
 type "node bot" in console to run bot
 
 (you need node.js installed)
+
+## TODO
+See [TODO](TODO.md).
