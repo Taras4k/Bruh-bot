@@ -33,8 +33,16 @@ client.on('message', message => {
     const userId = message.author.id;
 
     if(text.match(commands.vote)){
-        message.react(e.up);
-        message.react(e.down);
+        if(message.reference == null){
+            message.react(e.up);
+            message.react(e.down);
+        }else{
+            message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
+                messageRef.react(e.up);
+                messageRef.react(e.down);
+                message.delete({timeout: 1000}).catch((error) => {console.log(`Can't delete message! Error: ${error}`)});
+            });
+        }
     }
     if(text.match(commands.myid)) message.channel.send(`${message.author.tag}: ${message.author.id}`);
 
