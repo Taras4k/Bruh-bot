@@ -17,8 +17,8 @@ const commands = {
 };
 
 const e = {
-    up: '<a:voteup:864886664064925716>',
-    down: '<a:votedown:864886641712693278>',
+    up: '<:upvote:866191410117345340>',
+    down: '<:downvote:866191410172395560>',
     vc: '<:voidcoin:866191410133991445>'
 };
 
