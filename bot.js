@@ -40,7 +40,7 @@ client.on('message', message => {
             message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
                 messageRef.react(e.up);
                 messageRef.react(e.down);
-                message.delete({timeout: 1000}).catch((error) => {console.log(`Can't delete message! Error: ${error}`)});
+                message.delete({timeout: 1000}).catch((error) => console.log(`Can't delete message! Error: ${error}`));
             });
         }
     }
