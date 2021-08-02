@@ -66,7 +66,7 @@ client.on('message', message => {
             if(userdata.money >= amount){
                 userdata.money -= amount;
                 if(getRandomInt(1,2) == 1){
-                    message.channel.send(`Повезло! Вы выиграли ${Math.round(amount * 1.5)} монет, потратив ${amount}`);
+                    message.channel.send(`Повезло! Вы выиграли ${Math.round(amount * 1.5)} монет, потратив ${amount}!`);
                     userdata.money += Math.round(amount * 1.5);
                     console.log(userdata);
                 } else message.channel.send(`Не повезло... Вы потратили ${amount} монет, ничего не получив.`);
