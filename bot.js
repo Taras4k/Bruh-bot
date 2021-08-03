@@ -20,7 +20,7 @@ const commands = {
 
 const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
 const duration = (is_debug)? { work: 6000 } : { work: 120000 };
-if (is_debug) console.log("Entered debug mode.");
+if               (is_debug) console.log("Entered debug mode.");
 
 const e = {
     up: '<:up_vote:872043927589503037>',
