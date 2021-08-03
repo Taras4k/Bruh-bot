@@ -70,20 +70,20 @@ client.on('message', message => {
         let userdata = getUserdata(userId);
         if(text.match(commands.work) /*and any other tasks with duration/timeout*/){
             var timenow = Date.now();
-            if(userdata.work == "idle"){
+            if(userdata.task == "idle"){
                 if(text.match(commands.work)){
                     if(userdata.lastcomplete["work"] + cooldown.work < timenow){
-                        userdata.work = "work";
+                        userdata.task = "work";
                         userdata.lastuse["work"] = timenow;
                         message.channel.send(`Ты пошел на работу. Возвращайся через ${duration.work / 1000} секунд.`);
                     } else message.channel.send(`Ты сможешь снова пойти на работу через ${Math.floor((userdata.lastcomplete["work"] + cooldown["work"] - timenow) / 1000)} секунд.`);
                 }
-            } else if(userdata.work == "work" && text.match(commands.work)){
+            } else if(userdata.task == "work" && text.match(commands.work)){
                 if(userdata.lastuse["work"] + duration.work < timenow){
                     var moneyget = getRandomInt(2,8);
                     userdata.money += moneyget;
                     message.channel.send(`Ты вернулся с работы, заработав ${moneyget} монет`);
-                    userdata.work = "idle";
+                    userdata.task = "idle";
                     userdata.lastcomplete["work"] = timenow;
                 } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);
             }
@@ -130,7 +130,7 @@ function getUserdata(userId){
         fs.accessSync(`${__dirname}\\data\\users\\${userId}.json`);
         return JSON.parse(fs.readFileSync(`${__dirname}\\data\\users\\${userId}.json`));
     } catch (error){
-        let userdata = { money: 20, xp: 0, lvl: 0, lastuse: { work: 0}, lastcomplete: { work: 0 }, work: "idle"};
+        let userdata = { money: 20, xp: 0, lvl: 0, lastuse: { work: 0}, lastcomplete: { work: 0 }, task: "idle"};
         fs.writeFileSync(__dirname + `\\data\\users\\${userId}.json`, JSON.stringify(userdata));
         return userdata;
     }
