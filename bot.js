@@ -32,8 +32,8 @@ const cooldown = tcooldown;
 const duration = tduration;
 
 const e = {
-    up: '<:upvote:866191410117345340>',
-    down: '<:downvote:866191410172395560>',
+    up: '<:up_vote:872043927589503037>',
+    down: '<:down_vote:872043927518199808>',
     vc: '<:voidcoin:866191410133991445>'
 };
 
