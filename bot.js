@@ -22,8 +22,8 @@ var tcooldown;
 var tduration;
 if(is_debug){
     console.log("Entered debug mode.");
-    tcooldown = { work: 3000 };
-    tduration = { work: 2000 };
+    tcooldown = { work: 6000 };
+    tduration = { work: 6000 };
 } else {
     tcooldown = { work: 180000 };
     tduration = { work: 120000 };
