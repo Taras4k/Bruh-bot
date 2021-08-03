@@ -3,6 +3,8 @@ const fs = require("fs");
 const client = new Discord.Client();
 client.login('ODMzNzUyNzkwODU2ODkyNDI2.YH26yw.kztoOdiTwMZ3_d7qPKTV-_ResKE');
 
+const is_debug = (process.argv[2] == "debug");
+
 const commands = {
     vote: /^%(v|vote)/i,
     ping: /^%(p|ping)/i,
@@ -16,12 +18,26 @@ const commands = {
     transfer: /^s!(t|pay) (\d{1,3})$/i,
 };
 
-const cooldown = {
-    work: 180000
-};
-const duration = {
-    work: 120000
-};
+var tcooldown;
+var tduration;
+if(is_debug){
+    console.log("Entered debug mode.")
+    tcooldown = {
+        work: 3000
+    };
+    tduration = {
+        work: 2000
+    };
+} else {
+    tcooldown = {
+        work: 180000
+    };
+    tduration = {
+        work: 120000
+    };
+}
+const cooldown = tcooldown;
+const duration = tduration;
 
 const e = {
     up: '<:upvote:866191410117345340>',
@@ -69,11 +85,25 @@ client.on('message', message => {
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
     if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer)){
         let userdata = getUserdata(userId);
-        if(text.match(commands.work)){
-            var moneyget = getRandomInt(0,5);
-            userdata.money += moneyget;
-            message.channel.send(`Ты пошёл на работу и заработал ${moneyget} монет`);
-            fs.writeFileSync(__dirname + `/data/users/${userId}.json` , JSON.stringify(userdata));
+        if(text.match(commands.work) /*and any other tasks with duration/timeout*/){
+            var timenow = Date.now();
+            if(userdata.work == "idle"){
+                if(text.match(commands.work)){
+                    if(userdata.lastcomplete["work"] + cooldown.work < timenow){
+                        userdata.work = "work";
+                        userdata.lastuse["work"] = timenow;
+                        message.channel.send(`Ты пошел на работу. Возвращайся через ${duration.work / 1000} секунд.`);
+                    } else message.channel.send(`Ты сможешь снова пойти на работу через ${Math.floor((userdata.lastcomplete["work"] + cooldown["work"] - timenow) / 1000)} секунд.`);
+                }
+            } else if(userdata.work == "work" && text.match(commands.work)){
+                if(userdata.lastuse["work"] + duration.work < timenow){
+                    var moneyget = getRandomInt(2,8);
+                    userdata.money += moneyget;
+                    message.channel.send(`Ты вернулся с работы, заработав ${moneyget} монет`);
+                    userdata.work = "idle";
+                    userdata.lastcomplete["work"] = timenow;
+                } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);
+            }
         }
         if(text.match(commands.casino)){
             const amount = text.match(commands.casino)[2];
