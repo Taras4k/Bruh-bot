@@ -72,7 +72,7 @@ client.on('message', message => {
         .addField("inv | inventory", "Ваш инвентарь.", true)
         .addField("c | casino <1-999>", "Поставить ставку в казино. С шансом 50% вы получите 150% от указанной суммы", true)
         .addField("t | pay", "(В ответ на сообщение) Переводит указанное количество средств игроку.", true)
-        .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
+        .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
     if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer)){
         let userdata = getUserdata(userId);
         if(text.match(commands.work) /*and any other tasks with duration/timeout*/){
