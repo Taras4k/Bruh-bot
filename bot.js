@@ -22,7 +22,8 @@ const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
 const duration = (is_debug)? { work: 6000 } : { work: 120000 };
 if               (is_debug) console.log("Entered debug mode.");
 
-const XPGain = { work: [2, 5] };
+const XPGain = { work: [0, 10] };
+const XPForLevel = 20;
 
 const e = {
     up: '<:up_vote:872043927589503037>',
@@ -81,8 +82,10 @@ client.on('message', message => {
             } else if(userdata.task == "work" && text.match(commands.work)){
                 if(userdata.lastuse["work"] + duration.work < timenow){
                     var moneyget = getRandomInt(2,8);
+                    var expget = getRandomInt(XPGain.work[0], XPGain.work[1]);
                     userdata.money += moneyget;
                     message.channel.send(`Ты вернулся с работы, заработав ${moneyget} монет`);
+                    userdata = userAddXp(userdata, expget, message.channel);
                     userdata.task = "idle";
                     userdata.lastcomplete["work"] = timenow;
                 } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);
@@ -119,6 +122,7 @@ client.on('message', message => {
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
                 .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
+                .addField(`Level:`, `${userdata.lvl}${e.up}`, true)
                 .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
         }
         fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
@@ -134,4 +138,17 @@ function getUserdata(userId){
         fs.writeFileSync(__dirname + `\\data\\users\\${userId}.json`, JSON.stringify(userdata));
         return userdata;
     }
+}
+
+function userAddXp(data, amount, channel){
+    let userdata = data;
+    userdata.xp += amount;
+    if(userdata.xp >= (XPForLevel + (XPForLevel * userdata.lvl))){
+        while (userdata.xp >= (XPForLevel + (XPForLevel * userdata.lvl))) {
+            userdata.xp -= XPForLevel + (XPForLevel * userdata.lvl);
+            userdata.lvl++;
+            if(channel != null) channel.send(`<:up_vote:872043927589503037> Вы повысили уровень до ${userdata.lvl}!`);
+        }
+    }
+    return userdata;
 }
