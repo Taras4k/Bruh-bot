@@ -34,7 +34,7 @@ const duration = tduration;
 const e = {
     up: '<:up_vote:872043927589503037>',
     down: '<:down_vote:872043927518199808>',
-    vc: '<:voidcoin:866191410133991445>'
+    vc: '<:voidcoin:872046322990059582>'
 };
 
 client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`));
