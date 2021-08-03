@@ -10,10 +10,10 @@ const commands = {
     ping: /^%(p|ping)/i,
     myid: /^%(myid|id|mi)/i,
     yes_or_no: /^%(yrn|yes-or-no)/i,
+    help: /^(s!|%)(h|help)/i,
     // RPG
     inventory: /^s!(i|inv|inventory)/i,
     work: /^s!(w|work)/i,
-    help: /^(s!|%)(h|help)/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
     transfer: /^s!(t|pay) (\d{1,3})$/i,
 };
@@ -22,19 +22,11 @@ var tcooldown;
 var tduration;
 if(is_debug){
     console.log("Entered debug mode.")
-    tcooldown = {
-        work: 3000
-    };
-    tduration = {
-        work: 2000
-    };
+    tcooldown = { work: 3000 };
+    tduration = { work: 2000 };
 } else {
-    tcooldown = {
-        work: 180000
-    };
-    tduration = {
-        work: 120000
-    };
+    tcooldown = { work: 180000 };
+    tduration = { work: 120000 };
 }
 const cooldown = tcooldown;
 const duration = tduration;
@@ -45,9 +37,7 @@ const e = {
     vc: '<:voidcoin:866191410133991445>'
 };
 
-client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
-});
+client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`));
 
 function getRandomInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
 
@@ -135,8 +125,8 @@ client.on('message', message => {
         }
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
-            .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
-            .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
+                .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
+                .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
         }
         fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
     }
@@ -147,7 +137,7 @@ function getUserdata(userId){
         fs.accessSync(`${__dirname}\\data\\users\\${userId}.json`);
         return JSON.parse(fs.readFileSync(`${__dirname}\\data\\users\\${userId}.json`));
     } catch (error){
-        let userdata = { money:20, xp:0, lvl:0, lastuse: { work: 0}, lastcomplete: { work: 0 }, work: "idle"};
+        let userdata = { money: 20, xp: 0, lvl: 0, lastuse: { work: 0}, lastcomplete: { work: 0 }, work: "idle"};
         fs.writeFileSync(__dirname + `\\data\\users\\${userId}.json`, JSON.stringify(userdata));
         return userdata;
     }
