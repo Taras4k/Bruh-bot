@@ -16,6 +16,13 @@ const commands = {
     transfer: /^s!(t|pay) (\d{1,3})$/i,
 };
 
+const cooldown = {
+    work: 180000
+};
+const duration = {
+    work: 120000
+};
+
 const e = {
     up: '<:upvote:866191410117345340>',
     down: '<:downvote:866191410172395560>',
