@@ -37,7 +37,7 @@ const e = {
     vc: '<:voidcoin:872046322990059582>'
 };
 
-client.on('ready', () => console.log(`Logged in as ${client.user.tag}!`));
+client.on('ready', () => console.log(`Logged in as ${client.user.tag}`));
 
 function getRandomInt(min, max){ return Math.floor(Math.random() * (max - min + 1)) + min; }
 
