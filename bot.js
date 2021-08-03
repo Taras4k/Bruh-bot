@@ -126,7 +126,7 @@ client.on('message', message => {
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
                 .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
-                .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://i.imgur.com/jScb98B.jpg'));
+                .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
         }
         fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
     }
