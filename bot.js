@@ -21,7 +21,7 @@ const commands = {
 var tcooldown;
 var tduration;
 if(is_debug){
-    console.log("Entered debug mode.")
+    console.log("Entered debug mode.");
     tcooldown = { work: 3000 };
     tduration = { work: 2000 };
 } else {
