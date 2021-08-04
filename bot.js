@@ -13,6 +13,7 @@ const commands = {
     help: /^(s!|%)(h|help)$/i,
     // RPG
     inventory: /^s!(i|inv|inventory|my|me|profile)$/i,
+    level: /^s!(l|lvl|level)$/i,
     work: /^s!(w|work)$/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
     transfer: /^s!(t|pay) (\d{1,3})$/i,
