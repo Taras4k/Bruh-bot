@@ -8,7 +8,7 @@ const is_debug = (process.argv[2] == "debug");
 const commands = {
     vote: /^%(v|vote)$/i,
     ping: /^%(p|ping)$/i,
-    myid: /^%(myid|id|mi)$/i,
+    myid: /^%(myid|id)$/i,
     yes_or_no: /^%(yrn|yes-or-no)$/i,
     help: /^(s!|%)(h|help)$/i,
     // RPG
