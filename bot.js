@@ -68,7 +68,7 @@ client.on('message', message => {
         .addField("c | casino <1-999>", "Поставить ставку в казино. С шансом 50% вы получите 150% от указанной суммы", true)
         .addField("t | pay", "(В ответ на сообщение) Переводит указанное количество средств игроку.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
-    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer)){
+    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer) || text.match(commands.level)){
         let userdata = getUserdata(userId);
         if(text.match(commands.work) /*and any other tasks with duration/timeout*/){
             var timenow = Date.now();
@@ -125,6 +125,17 @@ client.on('message', message => {
                 .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
                 .addField(`Level:`, `${userdata.lvl}${e.up} ||(команда s!lvl)||`, true)
                 .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
+        }
+        if(text.match(commands.level)){
+            var XPPercent = (userdata.xp / (XPForLevel + (XPForLevel * userdata.lvl))) * 20;
+            var XPBar = "**";
+            for (let i = 0; i < XPPercent; i++) { XPBar += "/" }
+            XPBar += "**";
+            for (let i = 0; i < (20 - XPPercent); i++) { XPBar += "/" }
+            message.channel.send(
+                `Level: **${userdata.lvl}**\n` +
+                `[${XPBar}] (${userdata.xp} / ${(XPForLevel + (XPForLevel * userdata.lvl))})`
+            );
         }
         fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
     }
