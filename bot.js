@@ -19,7 +19,7 @@ const commands = {
 };
 
 const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
-const duration = (is_debug)? { work: 6000 } : { work: 120000 };
+const duration = (is_debug)? { work: 6000 } : { work: 240000 };
 if               (is_debug) console.log("Entered debug mode.");
 
 const XPGain = { work: [0, 10] };
