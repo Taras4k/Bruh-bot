@@ -16,7 +16,7 @@ const commands = {
     level: /^s!(l|lvl|level)$/i,
     work: /^s!(w|work)$/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
-    transfer: /^s!(t|pay) (<@[0-9]{16,20}>)? (\d{1,3})$/i,
+    transfer: /^s!(t|pay)( <@![0-9]{16,20}>)? (\d{1,3})$/i,
 };
 
 const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
@@ -104,21 +104,36 @@ client.on('message', message => {
             } else message.channel.send("Недостаточно монет!");
         }
         if (text.match(commands.transfer)){
-            if (message.reference != null){
-                message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
-                    const amount = Number(text.match(commands.transfer)[2]);
-                    if(amount > 0){
-                        if(userdata.money >= amount){
-                            let receivedata = getUserdata(messageRef.author.id);
+            const amount = Number(text.match(commands.transfer)[3]);
+            if(amount > 0){
+                if(userdata.money >= amount){
+                    let receiver = null;
+                    if(text.match(commands.transfer)[2] != null && text.match(commands.transfer)[2] != false && text.match(commands.transfer)[2] !== undefined){
+                        receiver = text.match(commands.transfer)[2].replace(" <@!", "").replace(">", "");
+                        if(receiver != null){
+                            let receivedata = getUserdata(receiver);
                             receivedata.money = Number(receivedata.money) + amount;
                             userdata.money = Number(userdata.money) - amount;
-                            fs.writeFileSync(__dirname + `/data/users/${messageRef.author.id}.json`, JSON.stringify(receivedata));
+                            fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
                             fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
-                            message.channel.send(`Ты перевёл ${amount + e.vc} игроку ${messageRef.author.tag}`);
-                        } else message.channel.send("Недостаточно монет!");
-                    } else message.channel.send("Это так не работает");
-                }).catch(console.error);
-            } else message.channel.send("Сообщение должно быть отправлено в ответ на сообщение!");
+                            message.channel.send(`Ты перевёл ${amount + e.vc} игроку <@`+receiver+">");
+                        }
+                    }
+                    else if (message.reference != null){
+                        message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
+                            receiver = messageRef.author.id;
+                            if(receiver != null){
+                                let receivedata = getUserdata(receiver);
+                                receivedata.money = Number(receivedata.money) + amount;
+                                userdata.money = Number(userdata.money) - amount;
+                                fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
+                                fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+                                message.channel.send(`Ты перевёл ${amount + e.vc} игроку <@`+receiver+">");
+                            }
+                        }).catch(console.error);
+                    }
+                } else message.channel.send("Недостаточно монет!");
+            } else message.channel.send("Это так не работает");
         }
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
