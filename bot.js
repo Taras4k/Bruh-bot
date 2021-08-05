@@ -16,7 +16,7 @@ const commands = {
     level: /^s!(l|lvl|level)$/i,
     work: /^s!(w|work)$/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
-    transfer: /^s!(t|pay) (\d{1,3})$/i,
+    transfer: /^s!(t|pay) (<@[0-9]{16,20}>)? (\d{1,3})$/i,
 };
 
 const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
