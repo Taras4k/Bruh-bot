@@ -111,24 +111,28 @@ client.on('message', message => {
                     if(text.match(commands.transfer)[2] != null && text.match(commands.transfer)[2] != false && text.match(commands.transfer)[2] !== undefined){
                         receiver = text.match(commands.transfer)[2].replace(" <@!", "").replace(">", "");
                         if(receiver != null){
-                            let receivedata = getUserdata(receiver);
-                            receivedata.money = Number(receivedata.money) + amount;
-                            userdata.money = Number(userdata.money) - amount;
-                            fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
-                            fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
-                            message.channel.send(`Ты перевёл ${amount + e.vc} игроку <@`+receiver+">");
-                        }
-                    }
-                    else if (message.reference != null){
-                        message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
-                            receiver = messageRef.author.id;
-                            if(receiver != null){
+                            if(receiver != message.author.id){
                                 let receivedata = getUserdata(receiver);
                                 receivedata.money = Number(receivedata.money) + amount;
                                 userdata.money = Number(userdata.money) - amount;
                                 fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
                                 fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
                                 message.channel.send(`Ты перевёл ${amount + e.vc} игроку <@`+receiver+">");
+                            } else message.channel.send("_Перевод самому себе? Зачем?_");
+                        }
+                    }
+                    else if (message.reference != null){
+                        message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
+                            receiver = messageRef.author.id;
+                            if(receiver != null){
+                                if(receiver != message.author.id){
+                                    let receivedata = getUserdata(receiver);
+                                    receivedata.money = Number(receivedata.money) + amount;
+                                    userdata.money = Number(userdata.money) - amount;
+                                    fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
+                                    fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+                                    message.channel.send(`Ты перевёл ${amount + e.vc} игроку <@`+receiver+">");
+                                } else message.channel.send("_Перевод самому себе? Зачем?_");
                             }
                         }).catch(console.error);
                     }
