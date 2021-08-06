@@ -24,7 +24,7 @@ const cooldown = (is_debug)? { work: 6000, fish: 6000 } : { work: 180000, fish: 
 const duration = (is_debug)? { work: 6000, fish: 6000 } : { work: 240000, fish: 360000 };
 if               (is_debug) console.log("Entered debug mode.");
 
-const XPGain = { work: [0, 10] };
+const XPGain = { work: [0, 10], fish: [0, 15] };
 const XPForLevel = 20;
 
 const e = {
