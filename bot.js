@@ -87,26 +87,30 @@ client.on('message', message => {
                         message.channel.send(`Ты пошел на рыбалку. Возвращайся через ${duration.fish / 1000} секунд.`);
                     } else message.channel.send(`Ты сможешь снова пойти на рыбалку через ${Math.floor((userdata.lastcomplete["fish"] + cooldown["fish"] - timenow) / 1000)} секунд.`);
                 }
-            } else if(userdata.task == "work" && text.match(commands.work)){
-                if(userdata.lastuse["work"] + duration.work < timenow){
-                    var moneyget = getRandomInt(2,8);
-                    var expget = getRandomInt(XPGain.work[0], XPGain.work[1]);
-                    userdata.money += moneyget;
-                    message.channel.send(`Ты вернулся с работы, заработав ${moneyget} монет`);
-                    userdata = userAddXp(userdata, expget, message.channel);
-                    userdata.task = "idle";
-                    userdata.lastcomplete["work"] = timenow;
-                } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);
-            } else if(userdata.task == "fish" && text.match(commands.fish)){
-                if(userdata.lastuse["fish"] + duration.fish < timenow){
-                    var fishget = getRandomInt(0,3);
-                    var expget = getRandomInt(XPGain.fish[0], XPGain.fish[1]);
-                    userdata.items.fish += fishget;
-                    message.channel.send(`Ты вернулся с рыбалки и принес ${fishget} рыб(ы)!`);
-                    userdata = userAddXp(userdata, expget, message.channel);
-                    userdata.task = "idle";
-                    userdata.lastcomplete["fish"] = timenow;
-                } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["fish"] + duration["fish"] - timenow) / 1000)} секунд.`);
+            } else if(userdata.task == "work"){
+                if(text.match(commands.work)){
+                    if(userdata.lastuse["work"] + duration.work < timenow){
+                        var moneyget = getRandomInt(2,8);
+                        var expget = getRandomInt(XPGain.work[0], XPGain.work[1]);
+                        userdata.money += moneyget;
+                        message.channel.send(`Ты вернулся с работы, заработав ${moneyget} монет`);
+                        userdata = userAddXp(userdata, expget, message.channel);
+                        userdata.task = "idle";
+                        userdata.lastcomplete["work"] = timenow;
+                    } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);    
+                } else message.channel.send(`Ты на работе.`);
+            } else if(userdata.task == "fish"){
+                if(text.match(commands.fish)){
+                    if(userdata.lastuse["fish"] + duration.fish < timenow){
+                        var fishget = getRandomInt(0,3);
+                        var expget = getRandomInt(XPGain.fish[0], XPGain.fish[1]);
+                        userdata.items.fish += fishget;
+                        message.channel.send(`Ты вернулся с рыбалки и принес ${fishget} рыб(ы)!`);
+                        userdata = userAddXp(userdata, expget, message.channel);
+                        userdata.task = "idle";
+                        userdata.lastcomplete["fish"] = timenow;
+                    } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["fish"] + duration["fish"] - timenow) / 1000)} секунд.`);
+                } else message.channel.send(`Ты на рыбалке.`);
             }
         }
         if(text.match(commands.casino)){
