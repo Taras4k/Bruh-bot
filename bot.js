@@ -20,8 +20,8 @@ const commands = {
     transfer: /^s!(t|pay)( <@![0-9]{16,20}>)? (\d{1,3})$/i,
 };
 
-const cooldown = (is_debug)? { work: 6000 } : { work: 180000 };
-const duration = (is_debug)? { work: 6000 } : { work: 240000 };
+const cooldown = (is_debug)? { work: 6000, fish: 6000 } : { work: 180000, fish: 240000 };
+const duration = (is_debug)? { work: 6000, fish: 6000 } : { work: 240000, fish: 360000 };
 if               (is_debug) console.log("Entered debug mode.");
 
 const XPGain = { work: [0, 10] };
