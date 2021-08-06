@@ -182,7 +182,7 @@ function getUserdata(userId){
         fs.accessSync(`${__dirname}\\data\\users\\${userId}.json`);
         return JSON.parse(fs.readFileSync(`${__dirname}\\data\\users\\${userId}.json`));
     } catch (error){
-        let userdata = { money: 20, xp: 0, lvl: 0, lastuse: { work: 0}, lastcomplete: { work: 0 }, task: "idle"};
+        let userdata = { money: 20, xp: 0, lvl: 0, lastuse: { work: 0, fish: 0 }, lastcomplete: { work: 0, fish: 0 }, task: "idle", items: { fish: 0 }};
         fs.writeFileSync(__dirname + `\\data\\users\\${userId}.json`, JSON.stringify(userdata));
         return userdata;
     }
