@@ -6,7 +6,7 @@ client.login('ODMzNzUyNzkwODU2ODkyNDI2.YH26yw.kztoOdiTwMZ3_d7qPKTV-_ResKE');
 const is_debug = (process.argv[2] == "debug");
 
 const commands = {
-    vote: /^%(v|vote)$/i,
+    vote: /^%(v|vote)/i,
     ping: /^%(p|ping)$/i,
     myid: /^%(myid|id)$/i,
     yes_or_no: /^%(yrn|yes-or-no)$/i,
