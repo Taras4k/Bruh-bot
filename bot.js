@@ -69,9 +69,9 @@ client.on('message', message => {
         .addField("c | casino <1-999>", "Поставить ставку в казино. С шансом 50% вы получите 150% от указанной суммы", true)
         .addField("t | pay", "(В ответ на сообщение) Переводит указанное количество средств игроку.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
-    if(text.match(commands.work) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer) || text.match(commands.level)){
+    if(text.match(commands.work) || text.match(commands.fish) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer) || text.match(commands.level)){
         let userdata = getUserdata(userId);
-        if(text.match(commands.work) /*and any other tasks with duration/timeout*/){
+        if(text.match(commands.work) || text.match(commands.fish) /*and any other tasks with duration/timeout*/){
             var timenow = Date.now();
             if(userdata.task == "idle"){
                 if(text.match(commands.work)){
@@ -80,6 +80,12 @@ client.on('message', message => {
                         userdata.lastuse["work"] = timenow;
                         message.channel.send(`Ты пошел на работу. Возвращайся через ${duration.work / 1000} секунд.`);
                     } else message.channel.send(`Ты сможешь снова пойти на работу через ${Math.floor((userdata.lastcomplete["work"] + cooldown["work"] - timenow) / 1000)} секунд.`);
+                } else if(text.match(commands.fish)){
+                    if(userdata.lastcomplete["fish"] + cooldown.fish < timenow){
+                        userdata.task = "fish";
+                        userdata.lastuse["fish"] = timenow;
+                        message.channel.send(`Ты пошел на рыбалку. Возвращайся через ${duration.fish / 1000} секунд.`);
+                    } else message.channel.send(`Ты сможешь снова пойти на рыбалку через ${Math.floor((userdata.lastcomplete["fish"] + cooldown["fish"] - timenow) / 1000)} секунд.`);
                 }
             } else if(userdata.task == "work" && text.match(commands.work)){
                 if(userdata.lastuse["work"] + duration.work < timenow){
@@ -91,6 +97,16 @@ client.on('message', message => {
                     userdata.task = "idle";
                     userdata.lastcomplete["work"] = timenow;
                 } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["work"] + duration["work"] - timenow) / 1000)} секунд.`);
+            } else if(userdata.task == "fish" && text.match(commands.fish)){
+                if(userdata.lastuse["fish"] + duration.fish < timenow){
+                    var fishget = getRandomInt(0,3);
+                    var expget = getRandomInt(XPGain.fish[0], XPGain.fish[1]);
+                    userdata.items.fish += fishget;
+                    message.channel.send(`Ты вернулся с рыбалки и принес ${fishget} рыб(ы)!`);
+                    userdata = userAddXp(userdata, expget, message.channel);
+                    userdata.task = "idle";
+                    userdata.lastcomplete["fish"] = timenow;
+                } else message.channel.send(`Возвращайся через ${Math.floor((userdata.lastuse["fish"] + duration["fish"] - timenow) / 1000)} секунд.`);
             }
         }
         if(text.match(commands.casino)){
