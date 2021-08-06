@@ -15,6 +15,7 @@ const commands = {
     inventory: /^s!(i|inv|inventory|my|me|profile)$/i,
     level: /^s!(l|lvl|level)$/i,
     work: /^s!(w|work)$/i,
+    fish: /^s!(f|fish|fishing)$/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
     transfer: /^s!(t|pay)( <@![0-9]{16,20}>)? (\d{1,3})$/i,
 };
