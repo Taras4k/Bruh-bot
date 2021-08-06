@@ -164,9 +164,12 @@ client.on('message', message => {
         }
         if(text.match(commands.level)){
             var XPPercent = (userdata.xp / (XPForLevel + (XPForLevel * userdata.lvl))) * 20;
-            var XPBar = "**";
-            for (let i = 0; i < XPPercent; i++) { XPBar += "/" }
-            XPBar += "**";
+            var XPBar = "";
+            if(userdata.xp > 0){
+                XPBar = "**";
+                for (let i = 0; i < XPPercent; i++) { XPBar += "/" }
+                XPBar += "**";
+            }
             for (let i = 0; i < (20 - XPPercent); i++) { XPBar += "/" }
             message.channel.send(
                 `Level: **${userdata.lvl}**\n` +
