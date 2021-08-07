@@ -66,6 +66,8 @@ client.on('message', message => {
     if(text.match(commands.help)) message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:")
         .addField("help", "Выводит это сообщение.", true)
         .addField("inv | inventory", "Ваш инвентарь.", true)
+        .addField("w | work", "Работать!", true)
+        .addField("f | fish", "Рыбачить!", true)
         .addField("c | casino <1-999>", "Поставить ставку в казино. С шансом 50% вы получите 150% от указанной суммы", true)
         .addField("t | pay", "(В ответ на сообщение) Переводит указанное количество средств игроку.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
