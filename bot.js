@@ -53,7 +53,9 @@ client.on('message', message => {
             });
         }
     }
-    if(text.match(commands.id)) message.channel.send(`${message.author.tag}: ${message.author.id}`);
+    if(text.match(commands.id)) if(message.reference != null) 
+        message.channel.messages.fetch(message.reference.messageID).then((messageRef) => message.channel.send(`${messageRef.author.tag}: ${messageRef.author.id}`));
+        else message.channel.send(`${message.author.tag}: ${message.author.id}`);
 
     if(text.match(commands.ping)) {
         message.channel.send("Pinging...").then(msg => {
