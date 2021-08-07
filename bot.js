@@ -65,6 +65,9 @@ client.on('message', message => {
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
     if(text.match(commands.help)) message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:")
         .addField("help", "Выводит это сообщение.", true)
+        .addField("vote", `Добавляет ${e.up} и ${e.down} к сообщению. (Команду можно отправить в ответ на сообщение)`, true)
+        .addField("id", "Узнать ID пользователя.", true)
+        .addField("yrn", "Магией рандома узнать `да` или `нет`.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4')).then((msg) => {
             msg.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Игровые команды:")
             .addField("inv | inventory", "Ваш инвентарь.", true)
