@@ -8,7 +8,7 @@ const is_debug = (process.argv[2] == "debug");
 const commands = {
     vote: /%(v|vote)/i,
     ping: /^%(p|ping)$/i,
-    myid: /^%(myid|id)$/i,
+    id: /^%id$/i,
     yes_or_no: /^%(yrn|yes-or-no)$/i,
     help: /^(s!|%)(h|help)$/i,
     // RPG
@@ -53,7 +53,7 @@ client.on('message', message => {
             });
         }
     }
-    if(text.match(commands.myid)) message.channel.send(`${message.author.tag}: ${message.author.id}`);
+    if(text.match(commands.id)) message.channel.send(`${message.author.tag}: ${message.author.id}`);
 
     if(text.match(commands.ping)) {
         message.channel.send("Pinging...").then(msg => {
