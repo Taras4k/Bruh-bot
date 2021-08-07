@@ -63,13 +63,13 @@ client.on('message', message => {
     }
     if(text.match(commands.yes_or_no)) if(getRandomInt(1,2) == 1) message.channel.send("Я думаю нет!"); else message.channel.send("Я думаю да!");
     //-----------------------------===================(Команды для РПГ)===================-----------------------------//
-    if(text.match(commands.help)) message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды:")
+    if(text.match(commands.help)) message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Команды (префикс `%`):")
         .addField("help", "Выводит это сообщение.", true)
         .addField("vote", `Добавляет ${e.up} и ${e.down} к сообщению. (Команду можно отправить в ответ на сообщение)`, true)
         .addField("id", "Узнать ID пользователя.", true)
         .addField("yrn", "Магией рандома узнать `да` или `нет`.", true)
         .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4')).then((msg) => {
-            msg.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Игровые команды:")
+            msg.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Игровые команды (префикс `s!`):")
             .addField("inv | inventory", "Ваш инвентарь.", true)
             .addField("w | work", "Работать!", true)
             .addField("f | fish", "Рыбачить!", true)
