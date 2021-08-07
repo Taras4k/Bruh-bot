@@ -171,9 +171,9 @@ client.on('message', message => {
             } else message.channel.send("Это так не работает");
         }
         if(text.match(commands.inventory)){
-            message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Inventory:")
-                .addField(`Coins:`, `${userdata.money}${e.vc}`, true)
-                .addField(`Level:`, `${userdata.lvl}${e.up} ||(команда s!lvl)||`, true)
+            message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Инвантарь:")
+                .addField(`Монеты:`, `${userdata.money}${e.vc}`, true)
+                .addField(`Уровень:`, `${userdata.lvl}${e.up} ||(команда s!lvl)||`, true)
                 .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
         }
         if(text.match(commands.level)){
@@ -186,7 +186,7 @@ client.on('message', message => {
             }
             for (let i = 0; i < (20 - XPPercent); i++) { XPBar += "/" }
             message.channel.send(
-                `Level: **${userdata.lvl}**\n` +
+                `Уровень: **${userdata.lvl}**\n` +
                 `[${XPBar}] (${userdata.xp} / ${(XPForLevel + (XPForLevel * userdata.lvl))})`
             );
         }
