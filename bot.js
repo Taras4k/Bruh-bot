@@ -174,6 +174,7 @@ client.on('message', message => {
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Инвантарь:")
                 .addField(`Монеты:`, `${userdata.money}${e.vc}`, true)
                 .addField(`Уровень:`, `${userdata.lvl}${e.up} ||(команда s!lvl)||`, true)
+                .addField(`Рыба:`, `${userdata.items.fish}`, false)
                 .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
         }
         if(text.match(commands.level)){
