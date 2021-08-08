@@ -31,7 +31,7 @@ const e = {
     up: '<:up_vote:872043927589503037>',
     down: '<:down_vote:872043927518199808>',
     vc: '<:voidcoin:872046322990059582>',
-    fish: '<:Fish:845340355507519509>'
+    fish: '🐟'
 };
 
 client.on('ready', () => console.log(`Logged in as ${client.user.tag}`));
