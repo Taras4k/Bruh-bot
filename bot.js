@@ -136,7 +136,7 @@ client.on('message', message => {
             } else message.channel.send("Недостаточно монет!");
         }
         if (text.match(commands.transfer)){
-            const amount = Number(text.match(commands.transfer)[3]);
+            const amount = Number(text.match(commands.transfer)[4]);
             if(amount > 0){
                 if(userdata.money >= amount){
                     let receiver = null;
