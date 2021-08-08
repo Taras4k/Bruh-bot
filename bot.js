@@ -141,7 +141,7 @@ client.on('message', message => {
                 if(userdata.money >= amount){
                     let receiver = null;
                     if(text.match(commands.transfer)[2] != null && text.match(commands.transfer)[2] != false && text.match(commands.transfer)[2] !== undefined){
-                        receiver = text.match(commands.transfer)[2].replace(" <@!", "").replace(">", "");
+                        receiver = text.match(commands.transfer)[2].replace(" <@", "").replace("!", "").replace(">", "");
                         if(receiver != null){
                             if(receiver != message.author.id){
                                 let receivedata = getUserdata(receiver);
