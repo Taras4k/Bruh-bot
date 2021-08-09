@@ -81,7 +81,7 @@ client.on('message', message => {
             .addField("t | pay", "(В ответ на сообщение) Переводит указанное количество средств игроку.", true)
             .setTimestamp().setFooter('By Tomoko and Kycb42148', 'https://avatars.githubusercontent.com/u/34296702?v=4'));
         });
-    if(text.match(commands.work) || text.match(commands.fish) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer) || text.match(commands.level)){
+    if(text.match(commands.work) || text.match(commands.fish) || text.match(commands.inventory) || text.match(commands.casino) || text.match(commands.transfer) || text.match(commands.give) || text.match(commands.level)){
         let userdata = getUserdata(userId);
         if(text.match(commands.work) || text.match(commands.fish) /*and any other tasks with duration/timeout*/){
             var timenow = Date.now();
