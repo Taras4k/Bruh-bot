@@ -18,7 +18,7 @@ const commands = {
     fish: /^s!(f|fish|fishing)$/i,
     casino: /^s!(c|casino) (\d{1,3})$/i,
     transfer: /^s!(t|pay)( <@(!)?[0-9]{16,20}>)? (\d{1,3})$/i,
-    give: /^s!(g|gift|give)( <@(!)?[0-9]{16,20}>)? (fish)$/
+    give: /^s!(g|gift|give)( <@(!)?[0-9]{16,20}>)? (fish) (\d{1,2})$/
 };
 
 const cooldown = (is_debug)? { work: 6000, fish: 6000 } : { work: 180000, fish: 240000 };
