@@ -173,12 +173,6 @@ client.on('message', message => {
             } else message.channel.send("Это так не работает");
         }
         // if(text.match(commands.give)){
-        //     console.log("0:" + text.match(commands.give)[0]);
-        //     console.log("1:" + text.match(commands.give)[1]);
-        //     console.log("2:" + text.match(commands.give)[2]);
-        //     console.log("3:" + text.match(commands.give)[3]);
-        //     console.log("4:" + text.match(commands.give)[4]);
-        //     console.log("5:" + text.match(commands.give)[5]);
         //     const item = Number(text.match(commands.give)[4].toLowerCase());
         //     const amount = Number(text.match(commands.give)[5].toLowerCase());
         //     if(amount > 0){
