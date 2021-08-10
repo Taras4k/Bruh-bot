@@ -172,6 +172,49 @@ client.on('message', message => {
                 } else message.channel.send("Недостаточно монет!");
             } else message.channel.send("Это так не работает");
         }
+        // if(text.match(commands.give)){
+        //     console.log("0:" + text.match(commands.give)[0]);
+        //     console.log("1:" + text.match(commands.give)[1]);
+        //     console.log("2:" + text.match(commands.give)[2]);
+        //     console.log("3:" + text.match(commands.give)[3]);
+        //     console.log("4:" + text.match(commands.give)[4]);
+        //     console.log("5:" + text.match(commands.give)[5]);
+        //     const item = Number(text.match(commands.give)[4].toLowerCase());
+        //     const amount = Number(text.match(commands.give)[5].toLowerCase());
+        //     if(amount > 0){
+        //         if(userdata.items[item] >= amount){
+        //             let receiver = null;
+        //             if(text.match(commands.give)[2] != null && text.match(commands.give)[2] != false && text.match(commands.give)[2] !== undefined){
+        //                 receiver = text.match(commands.give)[2].replace(" <@", "").replace("!", "").replace(">", "");
+        //                 if(receiver != null){
+        //                     if(receiver != message.author.id){
+        //                         let receivedata = getUserdata(receiver);
+        //                         receivedata.items[item] = Number(receivedata.items[item]) + amount;
+        //                         userdata.items[item] = Number(userdata.items[item]) - amount;
+        //                         fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
+        //                         fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        //                         message.channel.send(`Ты отдал ${amount + e[item]} игроку <@`+receiver+">");
+        //                     } else message.channel.send("_Подарки на день рождения тоже сам себе дарить будешь?_");
+        //                 }
+        //             }
+        //             else if (message.reference != null){
+        //                 message.channel.messages.fetch(message.reference.messageID).then((messageRef) => {
+        //                     receiver = messageRef.author.id;
+        //                     if(receiver != null){
+        //                         if(receiver != message.author.id){
+        //                             let receivedata = getUserdata(receiver);
+        //                             receivedata.items[item] = Number(receivedata.items[item]) + amount;
+        //                             userdata.items[item] = Number(userdata.items[item]) - amount;
+        //                             fs.writeFileSync(__dirname + `/data/users/${receiver}.json`, JSON.stringify(receivedata));
+        //                             fs.writeFileSync(__dirname + `/data/users/${userId}.json`, JSON.stringify(userdata));
+        //                             message.channel.send(`Ты отдал ${amount + e[item]} игроку <@`+receiver+">");
+        //                         } else message.channel.send("_Подарки на день рождения тоже сам себе дарить будешь?_");
+        //                     }
+        //                 }).catch(console.error);
+        //             }
+        //         } else message.channel.send(`Недостаточно ${e[item]}!`);
+        //     } else message.channel.send("Это так не работает");
+        // }
         if(text.match(commands.inventory)){
             message.channel.send(new Discord.MessageEmbed().setColor("#ffae00").setAuthor("Инвантарь:")
                 .addField(`Монеты:`, `${userdata.money}${e.vc}`, true)
